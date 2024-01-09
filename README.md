@@ -9,6 +9,10 @@ A proof-of-concept tool for generating payloads that exploit unsafe Java object 
 
 ![logo](ysoserial.png)
 
+# New Features
+- Allows java fragment code injection to be obtained from the environment variable Custom_Code_51pwn to solve complex command problems
+- Allows java fragment code injection to be obtained from the current directory file Custom_Code_51pwn to solve complex problems
+
 ## Description
 
 Originally released as part of AppSecCali 2015 Talk

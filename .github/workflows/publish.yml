@@ -2,7 +2,7 @@ name: publish jar
 on:
   push:
     tags:
-      - "v*.*.*"
+      - "*.*.*"
 permissions:
   contents: write
 
@@ -22,7 +22,7 @@ jobs:
       - name: Set version
         run: mvn versions:set -DnewVersion=${{ github.ref_name }}
       - name: Build jar
-        run: mvn -B clean package -DskipTests 
+        run: mvn -B clean package -DskipTests
       # - name: publish maven jar
       #   run: mvn -B deploy -DskipTests -DrepositoryId=github
         env:
@@ -35,6 +35,6 @@ jobs:
       - name: Publish GitHub release
         uses: softprops/action-gh-release@v1
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}        
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           files: target/ysoserial-all.jar
