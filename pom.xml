@@ -66,17 +66,17 @@
 	</build>
 
 	<repositories>
-		<repository>
-			<id>jenkins</id>
-			<layout>default</layout>
-			<url>https://repo.jenkins-ci.org/public/</url>
-		</repository>
         <repository>
             <id>maven-aliyun</id>
             <url>https://maven.aliyun.com/repository/central</url>
             <snapshots>
                 <enabled>false</enabled>
             </snapshots>
+        </repository>
+        <repository>
+            <id>jenkins</id>
+            <layout>default</layout>
+            <url>https://repo.jenkins-ci.org/public/</url>
         </repository>
 	</repositories>
 
