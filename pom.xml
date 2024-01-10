@@ -83,16 +83,16 @@
             <layout>default</layout>
             <url>https://repo.jenkins-ci.org/public/</url>
         </repository>
-        <repository>
-            <id>oracle-maven-repo</id>
-            <url>https://maven.oracle.com</url>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-        </repository>
+<!--        <repository>-->
+<!--            <id>oracle-maven-repo</id>-->
+<!--            <url>https://maven.oracle.com</url>-->
+<!--            <releases>-->
+<!--                <enabled>true</enabled>-->
+<!--            </releases>-->
+<!--            <snapshots>-->
+<!--                <enabled>false</enabled>-->
+<!--            </snapshots>-->
+<!--        </repository>-->
 	</repositories>
 
 	<dependencies>
@@ -317,6 +317,8 @@
             <groupId>com.oracle.weblogic</groupId>
             <artifactId>wlthint3client</artifactId>
             <version>10.3.5</version>
+            <scope>system</scope>
+            <systemPath>${basedir}/lib/wlthint3client.jar</systemPath>
         </dependency>
         <!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind -->
         <dependency>
