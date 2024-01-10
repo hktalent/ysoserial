@@ -83,6 +83,16 @@
             <layout>default</layout>
             <url>https://repo.jenkins-ci.org/public/</url>
         </repository>
+        <repository>
+            <id>oracle-maven-repo</id>
+            <url>https://maven.oracle.com</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
 	</repositories>
 
 	<dependencies>
