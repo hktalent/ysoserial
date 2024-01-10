@@ -18,7 +18,7 @@ import java.util.Random;
 
 /**
  *
- *
+ * javac -source 1.6 -target 1.6 -cp "$HOME/MyWork/vulScanPro/tools/weblogic/10.3.6/lib/*" "$HOME/MyWork/ysoserial/src/main/java/weblogic/jms/common/StreamMessageImpl.java"
  * UnicastRef.newCall(RemoteObject, Operation[], int, long)
  * DGCImpl_Stub.dirty(ObjID[], long, Lease)
  * DGCClient$EndpointEntry.makeDirtyCall(Set<RefEntry>, long)
