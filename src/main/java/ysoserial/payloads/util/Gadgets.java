@@ -26,6 +26,19 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.zip.GZIPOutputStream;
+import ysoserial.payloads.templates.ClassLoaderTemplate;
+import ysoserial.payloads.templates.CommandTemplate;
+import ysoserial.payloads.templates.ScriptEngineTemplate;
+import ysoserial.payloads.templates.SpringInterceptorTemplate;
+import ysoserial.payloads.templates.TomcatCmdEcho;
+import ysoserial.payloads.templates.TomcatFilterMemShellFromJMX;
+import ysoserial.payloads.templates.TomcatFilterMemShellFromThread;
+import ysoserial.payloads.templates.TomcatListenerMemShellFromJMX;
+import ysoserial.payloads.templates.TomcatListenerMemShellFromThread;
+import ysoserial.payloads.templates.TomcatListenerNeoRegFromThread;
+import ysoserial.payloads.templates.TomcatServletMemShellFromJMX;
+import ysoserial.payloads.templates.TomcatServletMemShellFromThread;
+import ysoserial.payloads.templates.ZohoPMPTomcatEcho;
 
 import static com.sun.org.apache.xalan.internal.xsltc.trax.TemplatesImpl.DESERIALIZE_TRANSLET;
 
