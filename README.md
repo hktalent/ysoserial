@@ -10,7 +10,7 @@ A proof-of-concept tool for generating payloads that exploit unsafe Java object 
 ![logo](ysoserial.png)
 
 # New Features
-- add CommonsCollections5_js support "js code",ByPass java8 "java.lang.Override missing element entrySet"
+- add CommonsCollections5js support "js code",ByPass java8 "java.lang.Override missing element entrySet"
 - Allows java fragment code injection to be obtained from the environment variable **Custom_Code_51pwn** to solve complex command problems
 eg:
 ```
@@ -65,6 +65,7 @@ Usage: java -jar ysoserial.jar [payload] '[command]'
      CommonsCollections3 @frohoff                    commons-collections:3.1
      CommonsCollections4 @frohoff                    commons-collections4:4.0
      CommonsCollections5 @matthias_kaiser, @jasinner commons-collections:3.1
+     CommonsCollections5js @51pwn                    commons-collections:3.1
      CommonsCollections6 @matthias_kaiser            commons-collections:3.1
      CommonsCollections7 @scristalli, @hanyrax, @EdoardoVignati commons-collections:3.1
      FileUpload1         @mbechler                   commons-fileupload:1.3.1, commons-io:2.4

