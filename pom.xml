@@ -320,13 +320,6 @@
             <scope>system</scope>
             <systemPath>${basedir}/lib/wlthint3client.jar</systemPath>
         </dependency>
-        <dependency>
-            <groupId>com.oracle.weblogic</groupId>
-            <artifactId>jmsadapter</artifactId>
-            <version>10.3.6</version>
-            <scope>system</scope>
-            <systemPath>${basedir}/lib/jmsadapter.jar</systemPath>
-        </dependency>
         <!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind -->
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
