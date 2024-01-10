@@ -10,6 +10,7 @@ A proof-of-concept tool for generating payloads that exploit unsafe Java object 
 ![logo](ysoserial.png)
 
 # New Features
+- add CommonsCollections5_js support "js code",ByPass java8 "java.lang.Override missing element entrySet"
 - Allows java fragment code injection to be obtained from the environment variable **Custom_Code_51pwn** to solve complex command problems
 eg:
 ```

