@@ -23,6 +23,7 @@ public @interface Authors {
     String S51pwn = "51pwn";
     String KULLRICH = "kai_ullrich";
     String TINT0 = "_tint0";
+    String WH1T3P1G = "wh1t3p1g";
     String SCRISTALLI = "scristalli";
     String HANYRAX = "hanyrax";
     String EDOARDOVIGNATI = "EdoardoVignati";

