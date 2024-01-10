@@ -2,7 +2,6 @@ package ysoserial.payloads.templates;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.IOException;
 
 public class ScriptEngineTemplate {
     static String cmd;
