@@ -19,6 +19,7 @@ public @interface Authors {
     String JACOBAINES = "jacob-baines";
     String JASINNER = "jasinner";
 
+    String Y4ER = "@Y4er";
     String S51pwn = "51pwn";
     String KULLRICH = "kai_ullrich";
     String TINT0 = "_tint0";
