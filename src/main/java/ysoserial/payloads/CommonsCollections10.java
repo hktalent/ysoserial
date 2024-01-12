@@ -91,7 +91,7 @@ public class CommonsCollections10  extends PayloadRunner implements ObjectPayloa
     }
 
     public static void main(final String[] args) throws Exception {
-        PayloadRunner.run((Class<? extends ysoserial.payloads.ObjectPayload<?>>) CommonsCollections10.class, args);
+//        PayloadRunner.run((Class<? extends ysoserial.payloads.ObjectPayload<?>>) CommonsCollections10.class, args);
     }
 
 }
