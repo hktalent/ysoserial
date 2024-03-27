@@ -53,6 +53,6 @@ public class DeserializationException implements Serializable {
         this.foo = foo;
     }
     public DeserializationException() {
-        
+
     }
 }

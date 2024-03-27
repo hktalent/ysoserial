@@ -43,6 +43,7 @@ public class GeneratePayload {
                     Field valfield = val.getClass().getDeclaredField("foo");
                     Reflections.setAccessible(valfield);
                     valfield.set(val, object);
+                    object = val;
                 }
             }catch (Throwable e3) {}
 
