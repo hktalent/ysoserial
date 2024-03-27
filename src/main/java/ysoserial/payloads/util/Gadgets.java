@@ -207,17 +207,19 @@ public class Gadgets {
         }
     }
 
-public static String Str2ByteStr(String s){
-        byte a[]=s.getBytes();
-        String szRst = "new String(new byte[]{";
-        for(int i = 0; i < a.length;i++){
-            if (0 < i){
-                szRst += ",";
+    public static String Str2ByteStr(String s) {
+        byte[] a = s.getBytes();
+        StringBuilder szRst = new StringBuilder("new String(new byte[]{");
+
+        for (int i = 0; i < a.length; i++) {
+            if (i > 0) { // Add comma after the first element
+                szRst.append(',');
             }
-            szRst += System.out.format("%d",a[i]);
+            szRst.append(a[i]); // Directly append the byte value
         }
-        return szRst + "})";
-}
+
+        return szRst.append("})").toString();
+    }
     public static <T> T createTemplatesImpl(Class myClass, final String command, byte[] bytes, Class<T> tplClass, Class<?> abstTranslet, Class<?> transFactory) throws Exception {
         final T templates = tplClass.newInstance();
         byte[] classBytes = new byte[0];
