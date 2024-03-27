@@ -52,4 +52,7 @@ public class DeserializationException implements Serializable {
     public DeserializationException(Object foo) {
         this.foo = foo;
     }
+    public DeserializationException() {
+        
+    }
 }
